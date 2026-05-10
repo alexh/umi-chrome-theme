@@ -369,7 +369,10 @@ function updateSolarArc(riseISO, setISO) {
   $solArc.setAttribute("stroke-dasharray", `${arcLen * pct} ${arcLen}`);
 
   // Marker position along the arc (parametric).
-  const theta = Math.PI * (1 - pct); // π = sunrise (left), 0 = sunset (right)
+  // theta=0 puts marker at sunrise side (x=10), theta=π at sunset side (x=190).
+  // The path itself draws left-to-right via M 10 70 A ... 190 70, so the
+  // marker has to follow the same direction as the dash fill.
+  const theta = Math.PI * pct;
   const cx = 100 - 90 * Math.cos(theta);
   const cy = 70 - 90 * Math.sin(theta);
   $solMark.setAttribute("cx", cx.toFixed(1));
