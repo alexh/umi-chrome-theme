@@ -1,4 +1,4 @@
-# Utility Materials for Chrome
+# Utility Materials Theme
 
 A Chrome browser theme in the Utility Materials house style: charcoal frame, restrained orange as state, Monaspace Krypton wordmark on the New Tab page.
 

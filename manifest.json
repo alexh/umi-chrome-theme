@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "version": "0.1.0",
-  "name": "Utility Materials for Chrome",
+  "name": "Utility Materials Theme",
   "short_name": "Utility Materials",
   "description": "Charcoal frame, restrained orange state. The Utility Materials palette ported to Chrome.",
   "theme": {

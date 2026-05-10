@@ -6,7 +6,7 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 cat <<EOF
-─── Utility Materials for Chrome // local install ───
+─── Utility Materials Theme // local install ───
 
 Theme directory:
   ${REPO_DIR}

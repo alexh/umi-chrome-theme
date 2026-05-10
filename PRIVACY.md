@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Utility Materials for Chrome** (theme) and **Utility Materials New Tab** (companion extension), published by Utility Materials Inc.
+**Utility Materials Theme** (theme) and **Utility Materials New Tab** (companion extension), published by Utility Materials Inc.
 
 Last updated: 2026-05-10
 
@@ -10,7 +10,7 @@ Neither extension collects, stores, transmits, sells, or monetizes personal info
 
 The new tab extension makes a small number of requests to public APIs to populate the on-screen widgets. Those requests are the only data leaving your device. Details below.
 
-## Utility Materials for Chrome (theme)
+## Utility Materials Theme (theme)
 
 This extension is a pure visual theme. It does not run scripts, make network requests, or read any data from the pages you visit. There is nothing to disclose.
 

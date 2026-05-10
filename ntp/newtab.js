@@ -165,8 +165,16 @@ function readGpuModel() {
 const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1500));
 idle(() => {
   const gpu = readGpuModel();
-  $gpuModel.textContent = gpu;
-  $gpuModel.title = gpu; // also expose full string on hover
+  if (gpu && gpu !== "—") {
+    $gpuModel.textContent = gpu;
+    $gpuModel.title = gpu; // expose full string on hover
+  } else {
+    // Headless rendering, software rasterization, or browsers that block
+    // WEBGL_debug_renderer_info return nothing usable. Hide the row entirely
+    // rather than show a stub — the widget reads cleaner.
+    const gpuRow = $gpuModel.closest(".resource__hw-row");
+    if (gpuRow) gpuRow.style.display = "none";
+  }
 }, { timeout: 3000 });
 
 if (!chrome?.system?.cpu) {
