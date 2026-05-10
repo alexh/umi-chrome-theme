@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Utility Materials // Command</title>
+    <link rel="stylesheet" href="newtab.css" />
+  </head>
+  <body>
+    <video
+      class="loop"
+      src="pipeline.mp4"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      disableremoteplayback
+    ></video>
+    <div class="dim" aria-hidden="true"></div>
+
+    <main class="hud">
+
+      <!-- TL: primary temporal cluster (heaviest visual weight) -->
+      <div class="hud__cell hud__cell--tl">
+        <section class="widget widget--clock" id="clock-widget">
+          <header class="widget__chrome">
+            <span class="widget__title">CHRONOMETER</span>
+            <span class="led led--green" aria-label="online"></span>
+          </header>
+          <svg class="analog" viewBox="-100 -100 200 200" aria-hidden="true">
+            <defs>
+              <!-- Outer bezel: warm metallic orange-bronze ring -->
+              <radialGradient id="analog-bezel" cx="0.3" cy="0.3" r="0.9">
+                <stop offset="0"    stop-color="#ffb070" />
+                <stop offset="0.45" stop-color="#c04a05" />
+                <stop offset="1"    stop-color="#5a1f00" />
+              </radialGradient>
+              <!-- Face: UMI orange with subtle inner darkening for depth -->
+              <radialGradient id="analog-face" cx="0.4" cy="0.32" r="0.95">
+                <stop offset="0"    stop-color="#ff8533" />
+                <stop offset="0.55" stop-color="#ff6700" />
+                <stop offset="1"    stop-color="#a83a00" />
+              </radialGradient>
+              <!-- Glass dome: bright white reflection top-left -->
+              <radialGradient id="analog-glass" cx="0.3" cy="0.2" r="0.65">
+                <stop offset="0"    stop-color="rgba(255,255,255,0.55)" />
+                <stop offset="0.5"  stop-color="rgba(255,255,255,0.08)" />
+                <stop offset="1"    stop-color="rgba(255,255,255,0)" />
+              </radialGradient>
+              <!-- Bottom highlight rim — the gel curve -->
+              <linearGradient id="analog-rim" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0"    stop-color="rgba(255,255,255,0.7)" />
+                <stop offset="0.5"  stop-color="rgba(255,255,255,0)" />
+                <stop offset="1"    stop-color="rgba(255,255,255,0.25)" />
+              </linearGradient>
+            </defs>
+
+            <circle r="96" fill="url(#analog-bezel)" />
+            <circle r="92" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="0.6" />
+            <circle r="86" fill="url(#analog-face)" />
+            <circle r="86" fill="url(#analog-rim)" />
+
+            <!-- hour & minute marks generated inline -->
+            <g class="analog__marks">
+              <line x1="0" y1="-82" x2="0" y2="-72" stroke="#ffffff" stroke-width="2.5" />
+              <line x1="0" y1="-82" x2="0" y2="-72" stroke="#ffffff" stroke-width="2.5" transform="rotate(30)" />
+              <line x1="0" y1="-82" x2="0" y2="-72" stroke="#ffffff" stroke-width="2.5" transform="rotate(60)" />
+              <line x1="0" y1="-82" x2="0" y2="-70" stroke="#ffffff" stroke-width="3.5" transform="rotate(90)" />
+              <line x1="0" y1="-82" x2="0" y2="-72" stroke="#ffffff" stroke-width="2.5" transform="rotate(120)" />
+              <line x1="0" y1="-82" x2="0" y2="-72" stroke="#ffffff" stroke-width="2.5" transform="rotate(150)" />
+              <line x1="0" y1="-82" x2="0" y2="-70" stroke="#ffffff" stroke-width="3.5" transform="rotate(180)" />
+              <line x1="0" y1="-82" x2="0" y2="-72" stroke="#ffffff" stroke-width="2.5" transform="rotate(210)" />
+              <line x1="0" y1="-82" x2="0" y2="-72" stroke="#ffffff" stroke-width="2.5" transform="rotate(240)" />
+              <line x1="0" y1="-82" x2="0" y2="-70" stroke="#ffffff" stroke-width="3.5" transform="rotate(270)" />
+              <line x1="0" y1="-82" x2="0" y2="-72" stroke="#ffffff" stroke-width="2.5" transform="rotate(300)" />
+              <line x1="0" y1="-82" x2="0" y2="-72" stroke="#ffffff" stroke-width="2.5" transform="rotate(330)" />
+            </g>
+
+            <!-- minute ticks -->
+            <g class="analog__ticks" stroke="rgba(255,255,255,0.55)" stroke-width="0.8">
+              <line x1="0" y1="-82" x2="0" y2="-78" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(6)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(12)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(18)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(24)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(36)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(42)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(48)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(54)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(66)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(72)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(78)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(84)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(96)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(102)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(108)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(114)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(126)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(132)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(138)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(144)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(156)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(162)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(168)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(174)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(186)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(192)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(198)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(204)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(216)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(222)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(228)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(234)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(246)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(252)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(258)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(264)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(276)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(282)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(288)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(294)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(306)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(312)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(318)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(324)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(336)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(342)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(348)" />
+              <line x1="0" y1="-82" x2="0" y2="-78" transform="rotate(354)" />
+            </g>
+
+            <text class="analog__num" x="0"   y="-58" text-anchor="middle" dominant-baseline="central">12</text>
+            <text class="analog__num" x="58"  y="0"   text-anchor="middle" dominant-baseline="central">3</text>
+            <text class="analog__num" x="0"   y="58"  text-anchor="middle" dominant-baseline="central">6</text>
+            <text class="analog__num" x="-58" y="0"   text-anchor="middle" dominant-baseline="central">9</text>
+
+            <!-- hands: white on orange face for max contrast; second hand brown-black to read as fast-moving needle -->
+            <g id="hand-hour" class="analog__hand analog__hand--hour">
+              <line x1="0" y1="14" x2="0" y2="-44" stroke="#ffffff" stroke-width="6"   stroke-linecap="round" />
+            </g>
+            <g id="hand-minute" class="analog__hand analog__hand--minute">
+              <line x1="0" y1="16" x2="0" y2="-64" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" />
+            </g>
+            <g id="hand-second" class="analog__hand analog__hand--second">
+              <line x1="0" y1="22" x2="0" y2="-70" stroke="#3a1a08" stroke-width="1.5" stroke-linecap="round" />
+              <circle cx="0" cy="-56" r="3" fill="#3a1a08" />
+            </g>
+
+            <!-- pivot jewel: white center, brass ring, dark dot -->
+            <circle r="7" fill="#ffffff" stroke="#5a1f00" stroke-width="1" />
+            <circle r="2.5" fill="#3a1a08" />
+
+            <!-- glass dome: bright white reflection (the "white highlight") -->
+            <ellipse cx="-26" cy="-36" rx="46" ry="28" fill="url(#analog-glass)" pointer-events="none" />
+          </svg>
+          <div class="analog__readout">
+            <span id="clock-time">--:--:--</span>
+            <span class="analog__ampm" id="clock-ampm">--</span>
+          </div>
+          <div class="analog__zone" id="clock-zone">—</div>
+        </section>
+
+        <section class="widget widget--date" id="date-widget">
+          <header class="widget__chrome">
+            <span class="widget__title">CALENDAR</span>
+            <span class="led led--green" aria-label="online"></span>
+          </header>
+          <div class="date">
+            <div class="date__dow" id="date-dow">—</div>
+            <div class="date__num" id="date-num">--</div>
+            <div class="date__moy" id="date-moy">—</div>
+          </div>
+          <footer class="date__year" id="date-year">----</footer>
+        </section>
+      </div>
+
+      <!-- TR: environmental cluster (medium weight) -->
+      <div class="hud__cell hud__cell--tr">
+        <section class="widget widget--weather" id="weather-widget">
+          <header class="widget__chrome">
+            <span class="widget__title">ATMOSPHERIC</span>
+            <span class="led led--amber" id="weather-led" aria-label="loading"></span>
+          </header>
+          <div class="weather">
+            <div class="weather__icon" id="weather-icon">◌</div>
+            <div class="weather__readout">
+              <div class="weather__temp"><span id="weather-temp">--</span><span class="weather__unit">°F</span></div>
+              <div class="weather__cond" id="weather-cond">acquiring signal…</div>
+            </div>
+          </div>
+          <footer class="weather__loc" id="weather-loc">— · —</footer>
+        </section>
+
+        <section class="widget widget--solar" id="solar-widget">
+          <header class="widget__chrome">
+            <span class="widget__title">SOLAR</span>
+            <span class="led led--amber" id="solar-led" aria-label="loading"></span>
+          </header>
+          <div class="solar">
+            <svg class="solar__arc" viewBox="0 -28 200 110" aria-hidden="true">
+              <defs>
+                <linearGradient id="solar-gradient" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0" stop-color="#ff6700" />
+                  <stop offset="0.5" stop-color="#ffd76b" />
+                  <stop offset="1" stop-color="#ff6700" />
+                </linearGradient>
+              </defs>
+              <path d="M 10 70 A 90 90 0 0 1 190 70" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-dasharray="2 4" />
+              <path id="solar-arc-fill" d="M 10 70 A 90 90 0 0 1 190 70" fill="none" stroke="url(#solar-gradient)" stroke-width="2.5" stroke-dasharray="0 1000" />
+              <circle id="solar-marker" cx="10" cy="70" r="4" fill="#ffd76b" />
+            </svg>
+            <div class="solar__times">
+              <div class="solar__cell"><span class="solar__label">RISE</span><span id="solar-rise">--:--</span></div>
+              <div class="solar__cell"><span class="solar__label">SET</span><span id="solar-set">--:--</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- BL: live system resources (CPU + RAM, real polled values) -->
+      <div class="hud__cell hud__cell--bl">
+        <section class="widget widget--resources" id="resources-widget">
+          <header class="widget__chrome">
+            <span class="widget__title">RESOURCES</span>
+            <span class="led led--green" id="resources-led" aria-label="online"></span>
+          </header>
+          <div class="resource">
+            <div class="resource__row">
+              <span class="resource__label">CPU</span>
+              <span class="resource__val" id="cpu-pct">— %</span>
+            </div>
+            <div class="resource__bar"><div class="resource__fill" id="cpu-bar"></div></div>
+          </div>
+          <div class="resource">
+            <div class="resource__row">
+              <span class="resource__label">MEMORY</span>
+              <span class="resource__val" id="ram-pct">— %</span>
+            </div>
+            <div class="resource__bar"><div class="resource__fill" id="ram-bar"></div></div>
+          </div>
+          <footer class="resource__hardware">
+            <div class="resource__hw-row" title="CPU model"><span class="resource__hw-label">CPU</span><span id="cpu-model">—</span></div>
+            <div class="resource__hw-row" title="GPU model"><span class="resource__hw-label">GPU</span><span id="gpu-model">—</span></div>
+          </footer>
+        </section>
+      </div>
+
+      <!-- BR: telemetry cluster (small, dense, system-status feel) -->
+      <div class="hud__cell hud__cell--br">
+        <section class="widget widget--status" id="status-widget">
+          <header class="widget__chrome">
+            <span class="widget__title">SYSTEM</span>
+            <span class="led led--green" id="status-online-led" aria-label="online"></span>
+          </header>
+          <ul class="status">
+            <li><span class="led led--sm" id="status-online-dot"></span> CONNECTION <em id="status-online">—</em></li>
+            <li><span class="led led--green led--sm"></span> VIEWPORT <em id="status-viewport">—</em></li>
+            <li><span class="led led--green led--sm"></span> LOCALE <em id="status-lang">—</em></li>
+            <li><span class="led led--green led--sm"></span> PROTOCOL <em id="status-version">—</em></li>
+          </ul>
+        </section>
+
+        <section class="widget widget--network" id="network-widget">
+          <header class="widget__chrome">
+            <span class="widget__title">NETWORK</span>
+            <span class="led led--amber" id="network-led" aria-label="loading"></span>
+          </header>
+          <div class="network">
+            <div class="network__row"><span class="network__label">GATEWAY</span><span id="network-rtt">— ms</span></div>
+            <div class="network__row"><span class="network__label">CONNECTION</span><span id="network-type">—</span></div>
+            <div class="network__bars" id="network-bars"></div>
+          </div>
+        </section>
+      </div>
+
+    </main>
+
+    <script src="newtab.js"></script>
+  </body>
+</html>

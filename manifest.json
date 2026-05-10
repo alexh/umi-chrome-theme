@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "version": "0.1.0",
+  "name": "Utility Materials for Chrome",
+  "short_name": "Utility Materials",
+  "description": "Charcoal frame, restrained orange state. The Utility Materials palette ported to Chrome.",
+  "theme": {
+    "images": {
+      "theme_frame": "images/theme_frame.png",
+      "theme_toolbar": "images/theme_toolbar.png",
+      "theme_tab_background": "images/theme_tab_background.png",
+      "theme_ntp_background": "images/theme_ntp_background.png"
+    },
+    "colors": {
+      "frame": [26, 26, 26],
+      "frame_inactive": [26, 26, 26],
+      "frame_incognito": [11, 11, 11],
+      "frame_incognito_inactive": [11, 11, 11],
+      "toolbar": [42, 28, 18],
+      "tab_text": [251, 241, 199],
+      "tab_background_text": [213, 196, 161],
+      "tab_background_text_inactive": [168, 153, 132],
+      "bookmark_text": [251, 241, 199],
+      "ntp_background": [26, 26, 26],
+      "ntp_text": [251, 241, 199],
+      "ntp_link": [255, 103, 0],
+      "ntp_header": [255, 103, 0],
+      "button_background": [42, 28, 18],
+      "toolbar_button_icon": [255, 103, 0],
+      "omnibox_background": [26, 26, 26],
+      "omnibox_text": [251, 241, 199]
+    },
+    "tints": {
+      "buttons": [0.0673, 1.0, 0.5],
+      "frame": [-1.0, -1.0, -1.0],
+      "frame_inactive": [-1.0, -1.0, -1.0],
+      "background_tab": [-1.0, -1.0, -1.0]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_background_repeat": "no-repeat",
+      "ntp_logo_alternate": 1
+    }
+  }
+}

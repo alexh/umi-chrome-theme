@@ -1,0 +1,17 @@
+.DS_Store
+*.zip
+*.crx
+*.pem
+node_modules/
+.vscode/
+.idea/
+
+# Chromium auto-generates this when loading an unpacked theme
+Cached Theme.pak
+
+# Build artifacts
+dist/
+build/
+
+# Disabled-folder safety pattern (we rename ntp → ntp.disabled for crash recovery)
+ntp.disabled/

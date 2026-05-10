@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "version": "0.4.1",
+  "name": "Utility Materials New Tab",
+  "short_name": "UMI New Tab",
+  "description": "Replaces the Chrome new tab page with the Utility Materials pipeline loop and an early-2000s skeuomorphic command center.",
+  "icons": {
+    "128": "icon.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": [
+    "system.cpu",
+    "system.memory"
+  ],
+  "host_permissions": [
+    "https://api.open-meteo.com/*",
+    "https://ipwho.is/*",
+    "https://ipapi.co/*"
+  ]
+}
