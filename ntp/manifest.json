@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.5.1",
+  "version": "0.5.2",
   "name": "Utility Materials New Tab",
   "short_name": "UMI New Tab",
   "description": "Replaces the Chrome new tab page with the Utility Materials pipeline loop and an early-2000s skeuomorphic command center.",

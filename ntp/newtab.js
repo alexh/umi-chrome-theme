@@ -242,36 +242,44 @@ const $solMark = $("solar-marker");
 
 $weatherWidget.classList.add("weather--loading");
 
+// WMO weather codes mapped to Meteocons icon names (bundled SVGs in ntp/icons/).
+// Format: [dayIcon, nightIcon | null, label]. Night variant used when is_day=0.
+// https://open-meteo.com/en/docs#weathervariables
 const WMO = {
-  0:  ["☀", "Clear"],
-  1:  ["🌤", "Mostly clear"],
-  2:  ["⛅", "Partly cloudy"],
-  3:  ["☁", "Overcast"],
-  45: ["🌫", "Fog"],
-  48: ["🌫", "Rime fog"],
-  51: ["🌦", "Light drizzle"],
-  53: ["🌦", "Drizzle"],
-  55: ["🌦", "Heavy drizzle"],
-  56: ["🌧", "Freezing drizzle"],
-  57: ["🌧", "Freezing drizzle"],
-  61: ["🌧", "Light rain"],
-  63: ["🌧", "Rain"],
-  65: ["🌧", "Heavy rain"],
-  66: ["🌧", "Freezing rain"],
-  67: ["🌧", "Freezing rain"],
-  71: ["🌨", "Light snow"],
-  73: ["🌨", "Snow"],
-  75: ["🌨", "Heavy snow"],
-  77: ["🌨", "Snow grains"],
-  80: ["🌦", "Showers"],
-  81: ["🌧", "Showers"],
-  82: ["⛈", "Heavy showers"],
-  85: ["🌨", "Snow showers"],
-  86: ["🌨", "Snow showers"],
-  95: ["⛈", "Thunderstorm"],
-  96: ["⛈", "Thunderstorm w/ hail"],
-  99: ["⛈", "Thunderstorm w/ hail"],
+  0:  ["clear-day",         "clear-night",         "Clear"],
+  1:  ["partly-cloudy-day", "partly-cloudy-night", "Mostly clear"],
+  2:  ["partly-cloudy-day", "partly-cloudy-night", "Partly cloudy"],
+  3:  ["overcast",          null,                  "Overcast"],
+  45: ["fog",               null,                  "Fog"],
+  48: ["fog",               null,                  "Rime fog"],
+  51: ["drizzle",           null,                  "Light drizzle"],
+  53: ["drizzle",           null,                  "Drizzle"],
+  55: ["drizzle",           null,                  "Heavy drizzle"],
+  56: ["drizzle",           null,                  "Freezing drizzle"],
+  57: ["drizzle",           null,                  "Freezing drizzle"],
+  61: ["rain",              null,                  "Light rain"],
+  63: ["rain",              null,                  "Rain"],
+  65: ["rain",              null,                  "Heavy rain"],
+  66: ["rain",              null,                  "Freezing rain"],
+  67: ["rain",              null,                  "Freezing rain"],
+  71: ["snow",              null,                  "Light snow"],
+  73: ["snow",              null,                  "Snow"],
+  75: ["snow",              null,                  "Heavy snow"],
+  77: ["snow",              null,                  "Snow grains"],
+  80: ["rain",              null,                  "Showers"],
+  81: ["rain",              null,                  "Showers"],
+  82: ["thunderstorms",     null,                  "Heavy showers"],
+  85: ["snow",              null,                  "Snow showers"],
+  86: ["snow",              null,                  "Snow showers"],
+  95: ["thunderstorms",     null,                  "Thunderstorm"],
+  96: ["hail",              null,                  "Thunderstorm w/ hail"],
+  99: ["hail",              null,                  "Thunderstorm w/ hail"],
 };
+
+function setWeatherIcon(name) {
+  const url = chrome.runtime.getURL(`icons/${name}.svg`);
+  $icon.innerHTML = `<img src="${url}" alt="" width="44" height="44" />`;
+}
 
 const TZ_FALLBACK = {
   "America/New_York":     { latitude: 40.7128,  longitude: -74.0060,  city: "New York",      region_code: "NY"  },
@@ -329,7 +337,7 @@ async function geolocate() {
 function setWeatherError(reason) {
   $temp.textContent = "--";
   $cond.textContent = reason;
-  $icon.textContent = "⚠";
+  setWeatherIcon("overcast"); // generic fallback icon
   $loc.textContent = "— · —";
   $wxLed.classList.remove("led--green");
   $wxLed.classList.add("led--amber");
@@ -465,11 +473,13 @@ async function loadWeatherAndSolar() {
 
     // Weather widget
     const code = c.weather_code;
-    const [glyph, label] = WMO[code] || ["◌", "—"];
     const isDay = c.is_day !== 0;
+    const entry = WMO[code] || ["overcast", null, "—"];
+    const [dayIcon, nightIcon, label] = entry;
+    const iconName = (!isDay && nightIcon) ? nightIcon : dayIcon;
     $temp.textContent = Math.round(c.temperature_2m);
     $cond.textContent = `${label} · ${Math.round(c.wind_speed_10m)} mph wind`;
-    $icon.textContent = !isDay && code === 0 ? "🌙" : glyph;
+    setWeatherIcon(iconName);
 
     const city = geo.city || "—";
     const region = geo.region_code || geo.region || "";
