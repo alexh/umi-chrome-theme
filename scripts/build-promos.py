@@ -259,18 +259,19 @@ def build_ntp_tile(out: Path) -> None:
     args += text(40, H - 30, F_LABEL, 8, DIM, "© 2026 UMI INC.")
     args += text(-40, H - 30, F_LABEL, 8, DIM, "NEW YORK", gravity="northeast")
 
-    # screenshot inset, with hairline border
+    # Layout math: tile 440 wide. Text column 40-220 (180px) for "MATERIALS"
+    # at 22pt ≈ 175px. Screenshot column 240-416 (176px wide). 20px gap.
     if SCREEN.exists():
-        args += ["(", str(SCREEN), "-resize", "230x",
+        args += ["(", str(SCREEN), "-resize", "176x",
                  "-bordercolor", DIM, "-border", "1",
-                 ")", "-gravity", "east", "-geometry", "+24+0", "-composite"]
+                 ")", "-gravity", "east", "-geometry", "+22+0", "-composite"]
 
-    args += text(40, 90, F_HEAVY, 24, FG, "UTILITY")
-    args += text(40, 118, F_HEAVY, 24, FG, "MATERIALS")
+    args += text(40, 92, F_HEAVY, 22, FG, "UTILITY")
+    args += text(40, 118, F_HEAVY, 22, FG, "MATERIALS")
     args += ["-strokewidth", "1.5", "-stroke", ORANGE,
-             "-draw", f"line 42,160 100,160", "-stroke", "none"]
-    args += text(40, 168, F_MED, 11, ORANGE, "NEW TAB")
-    args += text(40, 190, F_REG, 9, DIM, "COMMAND CENTER")
+             "-draw", f"line 42,156 100,156", "-stroke", "none"]
+    args += text(40, 164, F_MED, 11, ORANGE, "NEW TAB")
+    args += text(40, 186, F_REG, 9, DIM, "COMMAND CENTER")
 
     args.append(str(out))
     run(args)
