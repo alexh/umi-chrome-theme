@@ -1,0 +1,318 @@
+/* ─── Konami → PROTOCOL boot sequence ──────────────────────────────────── */
+
+.protocol-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  background: #060606;
+  color: #fbf1c7;
+  font-family: "Monaspace Krypton", "Lucida Console", "Consolas", monospace;
+  overflow: hidden;
+  isolation: isolate;
+  opacity: 0;
+  animation: po-fade-in 120ms ease-out forwards;
+}
+
+@keyframes po-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Phase 1: signal glitch ─────────────────────────────────────────── */
+.po-glitch {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(10px, 1.1vw, 14px);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: rgba(251, 241, 199, 0.85);
+  white-space: pre;
+  user-select: none;
+  text-shadow:
+    0 0 1px rgba(255, 255, 255, 0.5),
+    0 0 6px rgba(255, 103, 0, 0.25);
+  mix-blend-mode: screen;
+}
+
+.po-glitch.po-fading {
+  animation: po-glitch-out 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes po-glitch-out {
+  to { opacity: 0; transform: scale(1.04); filter: blur(4px); }
+}
+
+/* ─── Phase 2: terminal boot ─────────────────────────────────────────── */
+.po-terminal {
+  position: absolute;
+  top: 8vh;
+  left: 7vw;
+  font-size: clamp(13px, 1.15vw, 17px);
+  line-height: 1.55;
+  color: #fbf1c7;
+  white-space: pre;
+  text-shadow: 0 0 8px rgba(255, 103, 0, 0.35);
+  opacity: 0;
+  animation: po-term-in 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.po-terminal.po-fading {
+  animation: po-term-out 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes po-term-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes po-term-out {
+  to { opacity: 0; transform: translateY(-12px) scale(0.985); filter: blur(2px); }
+}
+
+.po-cursor {
+  display: inline-block;
+  width: 0.6em;
+  background: #fbf1c7;
+  height: 1em;
+  vertical-align: -2px;
+  animation: po-blink 380ms steps(1, end) infinite;
+}
+
+@keyframes po-blink {
+  50% { opacity: 0; }
+}
+
+/* ─── Phase 3: ASCII gear ─────────────────────────────────────────────── */
+.po-gear-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: po-gear-in 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.po-gear-wrap.po-fading {
+  animation: po-gear-out 260ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes po-gear-in {
+  from { opacity: 0; transform: scale(0.6); filter: blur(8px); }
+  to   { opacity: 1; transform: scale(1);   filter: blur(0); }
+}
+
+@keyframes po-gear-out {
+  to { opacity: 0; transform: scale(1.2); filter: blur(6px); }
+}
+
+.po-gear {
+  font-size: clamp(11px, 1.2vw, 16px);
+  line-height: 0.95;
+  color: #FF6700;
+  white-space: pre;
+  text-shadow:
+    0 0 6px rgba(255, 103, 0, 0.75),
+    0 0 18px rgba(255, 103, 0, 0.45),
+    0 0 32px rgba(255, 103, 0, 0.25);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Phase 4: title card ─────────────────────────────────────────────── */
+.po-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  opacity: 0;
+  animation: po-title-in 260ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.po-title.po-fading {
+  animation: po-title-up 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes po-title-in {
+  from { opacity: 0; letter-spacing: 1em; transform: translateY(20px); }
+  to   { opacity: 1; letter-spacing: normal; transform: translateY(0); }
+}
+
+@keyframes po-title-up {
+  to { opacity: 0.85; transform: translateY(-25vh) scale(0.55); }
+}
+
+.po-title-main {
+  font-family: "Trebuchet MS", "Lucida Sans", system-ui, sans-serif;
+  font-weight: 900;
+  font-size: clamp(34px, 5.2vw, 84px);
+  letter-spacing: 0.42em;
+  color: #fbf1c7;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.45),
+    0 0 32px rgba(255, 103, 0, 0.35),
+    0 2px 4px rgba(0, 0, 0, 0.6);
+  /* Letter-spacing collapse for added drama */
+  animation: po-title-ls 360ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes po-title-ls {
+  from { letter-spacing: 1.2em; opacity: 0; }
+  to   { letter-spacing: 0.42em; opacity: 1; }
+}
+
+.po-title-sub {
+  font-family: "Monaspace Krypton", monospace;
+  font-size: clamp(11px, 1.05vw, 14px);
+  letter-spacing: 0.28em;
+  color: #FF6700;
+  text-transform: uppercase;
+  font-style: italic;
+  opacity: 0;
+  animation: po-sub-in 240ms 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes po-sub-in {
+  to { opacity: 1; }
+}
+
+/* ─── Phase 5: status dump ────────────────────────────────────────────── */
+.po-status {
+  position: absolute;
+  bottom: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: clamp(12px, 1.1vw, 15px);
+  letter-spacing: 0.18em;
+  color: var(--steel, #d5c4a1);
+}
+
+.po-status li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: po-status-in 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes po-status-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.po-status li .po-led {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.9), transparent 38%),
+    radial-gradient(circle at 50% 60%, #2cff7a, #053f1c 70%);
+  box-shadow:
+    inset 0 -1px 1px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    0 0 8px rgba(44, 255, 122, 0.6),
+    0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.po-status li.po-ready em {
+  color: #FF6700;
+  font-style: normal;
+  font-weight: 700;
+  animation: po-ready-flash 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes po-ready-flash {
+  0%  { text-shadow: 0 0 24px rgba(255, 103, 0, 0.95); }
+  100%{ text-shadow: 0 0 4px rgba(255, 103, 0, 0.5); }
+}
+
+.po-status li em {
+  font-style: normal;
+  color: #fbf1c7;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-left: auto;
+}
+
+.po-status li code {
+  font-family: "Monaspace Krypton", monospace;
+  letter-spacing: 0.1em;
+  color: var(--steel, #d5c4a1);
+  width: 56px;
+}
+
+.po-status.po-fading {
+  animation: po-status-out 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes po-status-out {
+  to { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+}
+
+/* ─── Phase 6: CRT power-off ──────────────────────────────────────────── */
+.protocol-overlay.po-crt-off {
+  /* Two-stage pinch: vertical collapse, then horizontal collapse */
+  animation: po-crt-off 600ms cubic-bezier(0.6, 0, 0.85, 0.3) forwards;
+}
+
+@keyframes po-crt-off {
+  0%   { transform: scale(1, 1);     filter: brightness(1); }
+  45%  { transform: scale(1, 0.004); filter: brightness(2.2); }
+  85%  { transform: scale(0.001, 0.004); filter: brightness(2.2); opacity: 1; }
+  100% { transform: scale(0.001, 0.004); opacity: 0; }
+}
+
+/* Sustained scanline that runs throughout the sequence */
+.po-scanline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  filter: blur(2px);
+  pointer-events: none;
+  animation: po-scan 2200ms cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  opacity: 0.7;
+}
+
+@keyframes po-scan {
+  0%   { top: -2%; opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.7; }
+  100% { top: 102%; opacity: 0; }
+}
+
+/* Subtle CRT vignette over everything */
+.po-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.55) 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 2px,
+      rgba(0, 0, 0, 0.18) 2px,
+      rgba(0, 0, 0, 0.18) 3px
+    );
+  mix-blend-mode: multiply;
+}
