@@ -242,43 +242,44 @@ const $solMark = $("solar-marker");
 
 $weatherWidget.classList.add("weather--loading");
 
-// WMO weather codes mapped to Meteocons icon names (bundled SVGs in ntp/icons/).
+// WMO weather codes mapped to Icons8 skeuomorphism PNG icons.
 // Format: [dayIcon, nightIcon | null, label]. Night variant used when is_day=0.
+// Icons by Icons8 (https://icons8.com) — used per their free-tier terms.
 // https://open-meteo.com/en/docs#weathervariables
 const WMO = {
-  0:  ["clear-day",         "clear-night",         "Clear"],
+  0:  ["sun",               "full-moon",            "Clear"],
   1:  ["partly-cloudy-day", "partly-cloudy-night", "Mostly clear"],
   2:  ["partly-cloudy-day", "partly-cloudy-night", "Partly cloudy"],
-  3:  ["overcast",          null,                  "Overcast"],
-  45: ["fog",               null,                  "Fog"],
-  48: ["fog",               null,                  "Rime fog"],
-  51: ["drizzle",           null,                  "Light drizzle"],
-  53: ["drizzle",           null,                  "Drizzle"],
-  55: ["drizzle",           null,                  "Heavy drizzle"],
-  56: ["drizzle",           null,                  "Freezing drizzle"],
-  57: ["drizzle",           null,                  "Freezing drizzle"],
+  3:  ["cloud",             null,                  "Overcast"],
+  45: ["fog-night",         null,                  "Fog"],
+  48: ["fog-night",         null,                  "Rime fog"],
+  51: ["rain",              null,                  "Light drizzle"],
+  53: ["rain",              null,                  "Drizzle"],
+  55: ["rain",              null,                  "Heavy drizzle"],
+  56: ["sleet",             null,                  "Freezing drizzle"],
+  57: ["sleet",             null,                  "Freezing drizzle"],
   61: ["rain",              null,                  "Light rain"],
   63: ["rain",              null,                  "Rain"],
-  65: ["rain",              null,                  "Heavy rain"],
-  66: ["rain",              null,                  "Freezing rain"],
-  67: ["rain",              null,                  "Freezing rain"],
-  71: ["snow",              null,                  "Light snow"],
+  65: ["heavy-rain",        null,                  "Heavy rain"],
+  66: ["sleet",             null,                  "Freezing rain"],
+  67: ["sleet",             null,                  "Freezing rain"],
+  71: ["light-snow",        null,                  "Light snow"],
   73: ["snow",              null,                  "Snow"],
   75: ["snow",              null,                  "Heavy snow"],
-  77: ["snow",              null,                  "Snow grains"],
+  77: ["light-snow",        null,                  "Snow grains"],
   80: ["rain",              null,                  "Showers"],
-  81: ["rain",              null,                  "Showers"],
-  82: ["thunderstorms",     null,                  "Heavy showers"],
+  81: ["heavy-rain",        null,                  "Showers"],
+  82: ["chance-of-storm",   null,                  "Heavy showers"],
   85: ["snow",              null,                  "Snow showers"],
   86: ["snow",              null,                  "Snow showers"],
-  95: ["thunderstorms",     null,                  "Thunderstorm"],
+  95: ["storm",             null,                  "Thunderstorm"],
   96: ["hail",              null,                  "Thunderstorm w/ hail"],
   99: ["hail",              null,                  "Thunderstorm w/ hail"],
 };
 
 function setWeatherIcon(name) {
-  const url = chrome.runtime.getURL(`icons/${name}.svg`);
-  $icon.innerHTML = `<img src="${url}" alt="" width="44" height="44" />`;
+  const url = chrome.runtime.getURL(`icons/${name}.png`);
+  $icon.innerHTML = `<img src="${url}" alt="" width="48" height="48" />`;
 }
 
 const TZ_FALLBACK = {
@@ -337,7 +338,7 @@ async function geolocate() {
 function setWeatherError(reason) {
   $temp.textContent = "--";
   $cond.textContent = reason;
-  setWeatherIcon("overcast"); // generic fallback icon
+  setWeatherIcon("cloud"); // generic fallback icon
   $loc.textContent = "— · —";
   $wxLed.classList.remove("led--green");
   $wxLed.classList.add("led--amber");
@@ -474,7 +475,7 @@ async function loadWeatherAndSolar() {
     // Weather widget
     const code = c.weather_code;
     const isDay = c.is_day !== 0;
-    const entry = WMO[code] || ["overcast", null, "—"];
+    const entry = WMO[code] || ["cloud", null, "—"];
     const [dayIcon, nightIcon, label] = entry;
     const iconName = (!isDay && nightIcon) ? nightIcon : dayIcon;
     $temp.textContent = Math.round(c.temperature_2m);

@@ -77,3 +77,9 @@ scripts/
 ## License
 
 GPL-2.0-or-later
+
+## Credits
+
+- **Weather icons**: [Icons8 Skeuomorphism set](https://icons8.com/icons/set/weather--style-skeuomorphism). Used in `ntp/icons/`.
+- **Type**: [Monaspace](https://monaspace.githubnext.com) by GitHub Next. Krypton variant.
+- **Brand wordmark**: original UMI mark.
