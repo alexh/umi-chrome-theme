@@ -169,19 +169,19 @@ def build_theme_tile(out: Path) -> None:
     args += text(40, H - 30, F_LABEL, 8, DIM, "© 2026 UMI INC.")
     args += text(-40, H - 30, F_LABEL, 8, DIM, "NEW YORK", gravity="northeast")
 
-    # gear at right side, smaller, dimmed
+    # gear at right side, smaller so it doesn't crowd the wordmark
     if GEAR.exists():
-        args += ["(", str(GEAR), "-resize", "150x150",
+        args += ["(", str(GEAR), "-resize", "120x120",
                  "-channel", "A", "-evaluate", "multiply", "0.45", "+channel",
-                 ")", "-gravity", "east", "-geometry", "+30+0", "-composite"]
+                 ")", "-gravity", "east", "-geometry", "+34+0", "-composite"]
 
-    # wordmark
-    args += text(40, 90, F_HEAVY, 30, FG, "UTILITY")
-    args += text(40, 124, F_HEAVY, 30, FG, "MATERIALS")
-    # short orange rule
+    # Wordmark: 26pt fits inside a 260px text column without bleeding past
+    # the gear. "MATERIALS" at 26pt WideExtraBold ≈ 200px wide.
+    args += text(40, 92, F_HEAVY, 26, FG, "UTILITY")
+    args += text(40, 122, F_HEAVY, 26, FG, "MATERIALS")
     args += ["-strokewidth", "1.5", "-stroke", ORANGE,
-             "-draw", f"line 42,176 122,176", "-stroke", "none"]
-    args += text(40, 184, F_MED, 11, ORANGE, "A CHROME THEME")
+             "-draw", f"line 42,170 110,170", "-stroke", "none"]
+    args += text(40, 178, F_MED, 11, ORANGE, "A CHROME THEME")
 
     args.append(str(out))
     run(args)
@@ -204,24 +204,26 @@ def build_theme_marquee(out: Path) -> None:
     args += text(0, H - 56, F_LABEL, 11, DIM, "NEW YORK", gravity="north")
     args += text(-80, H - 56, F_LABEL, 11, DIM, "THEMES.UTILITY.MATERIALS.NYC", gravity="northeast")
 
+    # Gear right-side, sized to leave clearance for stacked wordmark.
+    # Wordmark column gets ~880px on the left, gear column ~340px on the right.
     if GEAR.exists():
-        args += ["(", str(GEAR), "-resize", "340x340",
-                 "-channel", "A", "-evaluate", "multiply", "0.40", "+channel",
-                 ")", "-gravity", "east", "-geometry", "+90+0", "-composite"]
-        args += hairline(950, 220, 1010, 220, DIM, 0.5)
-        args += text(950, 198, F_LABEL, 10, DIM, "№ 01")
-        args += text(950, 212, F_REG, 10, DIM, "BRAND MARK")
+        args += ["(", str(GEAR), "-resize", "320x320",
+                 "-channel", "A", "-evaluate", "multiply", "0.38", "+channel",
+                 ")", "-gravity", "east", "-geometry", "+100+0", "-composite"]
+        args += hairline(960, 388, 1020, 388, DIM, 0.5)
+        args += text(960, 366, F_LABEL, 10, DIM, "№ 01")
+        args += text(960, 380, F_REG, 10, DIM, "BRAND MARK")
 
-    # wordmark
-    args += text(80, 168, F_HEAVY, 96, FG, "UTILITY MATERIALS")
-    # orange rule
+    # Stacked wordmark: each line ≈ 700px wide at 90pt, fits in 880px column.
+    args += text(80, 138, F_HEAVY, 90, FG, "UTILITY")
+    args += text(80, 244, F_HEAVY, 90, FG, "MATERIALS")
     args += ["-strokewidth", "2.5", "-stroke", ORANGE,
-             "-draw", "line 82,288 290,288", "-stroke", "none"]
-    args += text(80, 296, F_MED, 22, ORANGE, "A CHROME THEME")
-    args += text(80, 340, F_REG, 12, DIM,
+             "-draw", "line 82,360 280,360", "-stroke", "none"]
+    args += text(80, 368, F_MED, 22, ORANGE, "A CHROME THEME")
+    args += text(80, 412, F_REG, 12, DIM,
                  "CHARCOAL FRAME · ORANGE STATE · MONOSPACE-FORWARD TYPE")
 
-    # palette specimens (4 swatches, more compact than the full card)
+    # Compact palette row at bottom-left (4 specimens, doesn't reach the gear)
     specs = [
         ("01", "#1a1a1a", "FRAME"),
         ("02", "#2a1c12", "TOOLBAR"),
@@ -229,13 +231,13 @@ def build_theme_marquee(out: Path) -> None:
         ("04", "#fbf1c7", "CREAM"),
     ]
     sx = 80
-    sy = 408
+    sy = 452
     for i, (num, hex_, name) in enumerate(specs):
-        x = sx + i * 132
-        args += text(x, sy - 18, F_LABEL, 9, DIM, f"№ {num}")
-        args += filled_rect(x, sy, x + 60, sy + 60, hex_, DIM, 0.5)
-        args += text(x, sy + 70, F_LABEL, 10, FG, name)
-        args += text(x, sy + 86, F_MONO, 9, DIM, hex_)
+        x = sx + i * 130
+        args += text(x, sy - 16, F_LABEL, 9, DIM, f"№ {num}")
+        args += filled_rect(x, sy, x + 48, sy + 36, hex_, DIM, 0.5)
+        args += text(x + 56, sy + 6, F_LABEL, 10, FG, name)
+        args += text(x + 56, sy + 22, F_MONO, 9, DIM, hex_)
 
     args.append(str(out))
     run(args)
