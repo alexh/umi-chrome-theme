@@ -45,7 +45,10 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  /* `cover` instead of `contain` — fills the viewport with no possible
+     letterbox regardless of viewport aspect ratio. Slight content crop
+     on extreme aspects is acceptable; visible black bars are not. */
+  object-fit: cover;
   background: var(--bg-page);
   pointer-events: none;
   user-select: none;
