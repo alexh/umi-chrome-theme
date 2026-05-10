@@ -65,6 +65,87 @@ tickCalendar();
 // Re-check date once per minute (handles midnight rollover without burning ticks).
 setInterval(tickCalendar, 60_000);
 
+// ─── Lunar phase widget ──────────────────────────────────────────────────
+const $lunarLit   = $("lunar-lit");
+const $lunarName  = $("lunar-name");
+const $lunarIllum = $("lunar-illum");
+const $lunarNext  = $("lunar-next");
+const $lunarNextLabel = $("lunar-next-label");
+
+const SYNODIC_MS  = 29.530588 * 24 * 60 * 60 * 1000;
+const LUNAR_REF   = Date.UTC(2000, 0, 6, 18, 14); // canonical new moon
+const PHASE_NAMES = [
+  "NEW MOON",
+  "WAXING CRESCENT",
+  "FIRST QUARTER",
+  "WAXING GIBBOUS",
+  "FULL MOON",
+  "WANING GIBBOUS",
+  "LAST QUARTER",
+  "WANING CRESCENT",
+];
+
+function computeMoonPhase(date = new Date()) {
+  const elapsed = date.getTime() - LUNAR_REF;
+  const phase   = (((elapsed % SYNODIC_MS) + SYNODIC_MS) % SYNODIC_MS) / SYNODIC_MS;
+  const illum   = (1 - Math.cos(2 * Math.PI * phase)) / 2;
+  // 8-bucket name; offset by 1/16 so each bucket is centered on its phase
+  const bucket  = Math.floor(((phase + 1 / 16) % 1) * 8);
+  const name    = PHASE_NAMES[bucket];
+
+  // Days to next full / new
+  const daysToFull = phase < 0.5
+    ? (0.5 - phase) * 29.530588
+    : (1.5 - phase) * 29.530588;
+  const daysToNew  = (1 - phase) * 29.530588;
+
+  return { phase, illum, name, bucket, daysToFull, daysToNew };
+}
+
+// SVG path describing the illuminated portion of the moon.
+// Half of outer circle + half of inner terminator ellipse.
+function moonLitPath(phase) {
+  const r = 28, cx = 32, cy = 32;
+  const rx = r * Math.abs(Math.cos(2 * Math.PI * phase));
+
+  const isWaxing  = phase < 0.5;
+  const isGibbous = (phase >= 0.25 && phase < 0.75);
+
+  // Outer arc: bowed right (1) when waxing, left (0) when waning.
+  const sweepOuter = isWaxing ? 1 : 0;
+  // Terminator arc:
+  //   Crescent: bows INWARD (small lit area) → opposite sweep of outer
+  //   Gibbous:  bows OUTWARD (mostly lit)    → same sweep as outer
+  const sweepInner = isGibbous ? sweepOuter : 1 - sweepOuter;
+
+  return `M ${cx},${cy - r} ` +
+         `A ${r},${r} 0 0 ${sweepOuter} ${cx},${cy + r} ` +
+         `A ${rx.toFixed(2)},${r} 0 0 ${sweepInner} ${cx},${cy - r} Z`;
+}
+
+function tickLunar() {
+  const m = computeMoonPhase();
+  $lunarLit.setAttribute("d", moonLitPath(m.phase));
+  $lunarName.textContent = m.name;
+  $lunarIllum.textContent = `${Math.round(m.illum * 100)}%`;
+
+  // Show whichever upcoming event (full or new) is sooner.
+  if (m.daysToFull < m.daysToNew) {
+    $lunarNextLabel.textContent = "NEXT FULL";
+    $lunarNext.textContent = m.daysToFull < 1
+      ? `${Math.round(m.daysToFull * 24)} hr`
+      : `${m.daysToFull.toFixed(1)} d`;
+  } else {
+    $lunarNextLabel.textContent = "NEXT NEW";
+    $lunarNext.textContent = m.daysToNew < 1
+      ? `${Math.round(m.daysToNew * 24)} hr`
+      : `${m.daysToNew.toFixed(1)} d`;
+  }
+}
+tickLunar();
+// Phase changes slowly; once per hour is more than enough.
+setInterval(tickLunar, 60 * 60 * 1000);
+
 // ─── Resources widget (live CPU + RAM via chrome.system APIs, GPU via WebGL) ──
 const $cpuPct   = $("cpu-pct");
 const $cpuBar   = $("cpu-bar");

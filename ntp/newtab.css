@@ -438,6 +438,65 @@ body {
   font-weight: 700;
 }
 
+/* ─── Lunar widget ─── */
+.widget--lunar { width: 280px; padding: 10px 14px 12px; }
+
+.lunar {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.lunar__face {
+  width: 72px;
+  height: 72px;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5))
+          drop-shadow(0 0 8px rgba(251, 241, 199, 0.18));
+}
+
+.lunar__data {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.lunar__name {
+  font-family: "Trebuchet MS", "Lucida Sans", Verdana, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.20em;
+  color: var(--bone);
+  text-shadow: 0 0 6px rgba(251, 241, 199, 0.2), 0 1px 1px rgba(0, 0, 0, 0.7);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.lunar__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.lunar__label {
+  font-family: "Trebuchet MS", "Lucida Sans", Verdana, system-ui, sans-serif;
+  font-weight: 700;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.lunar__val {
+  font-family: "Lucida Console", "Consolas", "Menlo", monospace;
+  font-variant-numeric: tabular-nums;
+  color: var(--bone);
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+}
+
 /* ─── Network widget ─── */
 .network {
   display: flex;

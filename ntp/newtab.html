@@ -220,6 +220,55 @@
             </div>
           </div>
         </section>
+
+        <section class="widget widget--lunar" id="lunar-widget">
+          <header class="widget__chrome">
+            <span class="widget__title">LUNAR</span>
+            <span class="led led--green" aria-label="online"></span>
+          </header>
+          <div class="lunar">
+            <svg class="lunar__face" viewBox="0 0 64 64" aria-hidden="true">
+              <defs>
+                <radialGradient id="lunar-surface" cx="35%" cy="28%" r="75%">
+                  <stop offset="0"    stop-color="#fbf1c7" />
+                  <stop offset="0.55" stop-color="#d5c4a1" />
+                  <stop offset="1"    stop-color="#806750" />
+                </radialGradient>
+                <radialGradient id="lunar-shadow" cx="50%" cy="50%" r="55%">
+                  <stop offset="0"    stop-color="#1a1a1a" />
+                  <stop offset="0.85" stop-color="#0a0a0a" />
+                  <stop offset="1"    stop-color="#050505" />
+                </radialGradient>
+                <radialGradient id="lunar-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0.55" stop-color="rgba(251,241,199,0)" />
+                  <stop offset="1"    stop-color="rgba(251,241,199,0.18)" />
+                </radialGradient>
+              </defs>
+              <circle cx="32" cy="32" r="30" fill="url(#lunar-glow)" />
+              <circle cx="32" cy="32" r="28" fill="url(#lunar-shadow)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5" />
+              <path id="lunar-lit" d="" fill="url(#lunar-surface)" />
+              <!-- Subtle craters as tiny dim circles (visible only on lit area via blend) -->
+              <g class="lunar__craters" fill="rgba(80,60,40,0.4)">
+                <circle cx="38" cy="22" r="1.6" />
+                <circle cx="42" cy="33" r="2.2" />
+                <circle cx="29" cy="40" r="1.4" />
+                <circle cx="22" cy="28" r="1.8" />
+                <circle cx="48" cy="42" r="1.0" />
+              </g>
+            </svg>
+            <div class="lunar__data">
+              <div class="lunar__name" id="lunar-name">—</div>
+              <div class="lunar__row">
+                <span class="lunar__label">ILLUM</span>
+                <span class="lunar__val" id="lunar-illum">--%</span>
+              </div>
+              <div class="lunar__row">
+                <span class="lunar__label" id="lunar-next-label">NEXT FULL</span>
+                <span class="lunar__val" id="lunar-next">-- d</span>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
       <!-- BL: live system resources (CPU + RAM, real polled values) -->
